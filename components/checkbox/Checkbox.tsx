@@ -53,10 +53,16 @@ export default class Checkbox extends React.Component<CheckboxProps, {}, {}> {
 
   private rcCheckbox: any;
 
-  shouldComponentUpdate(nextProps: CheckboxProps, nextState: {}, nextContext: CheckboxGroupContext) {
-    return !shallowEqual(this.props, nextProps) ||
-           !shallowEqual(this.state, nextState) ||
-           !shallowEqual(this.context.checkboxGroup, nextContext.checkboxGroup);
+  shouldComponentUpdate(
+    nextProps: CheckboxProps,
+    nextState: {},
+    nextContext: CheckboxGroupContext,
+  ) {
+    return (
+      !shallowEqual(this.props, nextProps) ||
+      !shallowEqual(this.state, nextState) ||
+      !shallowEqual(this.context.checkboxGroup, nextContext.checkboxGroup)
+    );
   }
 
   focus() {
@@ -69,7 +75,7 @@ export default class Checkbox extends React.Component<CheckboxProps, {}, {}> {
 
   saveCheckbox = (node: any) => {
     this.rcCheckbox = node;
-  }
+  };
 
   render() {
     const { props, context } = this;
@@ -97,6 +103,8 @@ export default class Checkbox extends React.Component<CheckboxProps, {}, {}> {
     }
     const classString = classNames(className, {
       [`${prefixCls}-wrapper`]: true,
+      [`${prefixCls}-wrapper-checked`]: checkboxProps.checked,
+      [`${prefixCls}-wrapper-disabled`]: checkboxProps.disabled,
     });
     const checkboxClass = classNames({
       [`${prefixCls}-indeterminate`]: indeterminate,
@@ -114,7 +122,7 @@ export default class Checkbox extends React.Component<CheckboxProps, {}, {}> {
           className={checkboxClass}
           ref={this.saveCheckbox}
         />
-        {children !== undefined ? <span>{children}</span> : null}
+        {children !== undefined && <span>{children}</span>}
       </label>
     );
   }

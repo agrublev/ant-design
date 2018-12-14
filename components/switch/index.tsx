@@ -18,6 +18,7 @@ export interface SwitchProps {
   disabled?: boolean;
   loading?: boolean;
   autoFocus?: boolean;
+  style?: React.CSSProperties;
 }
 
 export default class Switch extends React.Component<SwitchProps, {}> {
@@ -45,25 +46,23 @@ export default class Switch extends React.Component<SwitchProps, {}> {
 
   saveSwitch = (node: typeof RcSwitch) => {
     this.rcSwitch = node;
-  }
+  };
 
   render() {
-    const { prefixCls, size, loading, className = '' } = this.props;
+    const { prefixCls, size, loading, className = '', disabled } = this.props;
     const classes = classNames(className, {
       [`${prefixCls}-small`]: size === 'small',
       [`${prefixCls}-loading`]: loading,
     });
     const loadingIcon = loading ? (
-      <Icon
-        type="loading"
-        className={`${prefixCls}-loading-icon`}
-      />
+      <Icon type="loading" className={`${prefixCls}-loading-icon`} />
     ) : null;
     return (
       <Wave insertExtraNode>
         <RcSwitch
           {...omit(this.props, ['loading'])}
           className={classes}
+          disabled={disabled || loading}
           ref={this.saveSwitch}
           loadingIcon={loadingIcon}
         />
